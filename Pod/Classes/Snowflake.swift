@@ -8,14 +8,8 @@
 import UIKit
 
 class Snowflake : UIView {
-    override init (frame : CGRect) {
-        super.init(frame : frame)
-        self.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-        self.layer.cornerRadius = CGFloat(self.frame.width/2)
-        self.layer.borderWidth = 0.0
-    }
 
-    convenience init (position : CGPoint, minimumSize : Int, maximumSize : Int) {
+    convenience init (position : CGPoint, minimumSize : Int, maximumSize : Int, image: UIImage?) {
         let randomSize: CGFloat!
         
         if minimumSize < maximumSize {
@@ -24,10 +18,12 @@ class Snowflake : UIView {
             //If the parameters passed in were not correct, we should flip which is the min and max
             randomSize = CGFloat(arc4random_uniform(UInt32(minimumSize - maximumSize)) + UInt32(maximumSize))
         }
+
         self.init(frame: CGRect(x: position.x, y: position.y, width: randomSize, height: randomSize))
+
+        let imageView = UIImageView(image: image)
+        imageView.frame = self.frame
+        addSubview(imageView)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        fatalError("This class does not support NSCoding")
-    }
 }
